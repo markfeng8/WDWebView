@@ -1,2 +1,3 @@
+include ':wdwebLib'
 include ':app'
 rootProject.name = "WDWebView"

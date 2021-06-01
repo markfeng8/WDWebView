@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <title>test</title>
+
+
+    <style type="text/css">
+        .divs {
+    width: 100%;
+    height: 100px;
+    background-color: green;
+    /*margin的属性顺序是上右下左*/
+    margin: 50px 50px 50px 50px;
+
+    }
+
+
+#j1 {
+    /*这里把上面divs中设置的背景颜色覆盖了*/
+    background-color: white;
+}
+
+    </style>
+
+    <script src="https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js"></script>
+    <script>
+  // 初始化
+  var vConsole = new VConsole();
+  vConsole.show()
+  console.log('Hello world');
+</script>
+
+
+    <script>
+    function executeJS(result,msg){
+    document.getElementById("text").value=result+msg;
+return '我是js返回的参数';
+    }
+
+    function jsCallAndroid(){
+     window.WDAndroid.nativePermission('我是js')
+     }
+    </script>
+</head>
+
+
+<body>
+<div id="j1" class="divs">
+    <textarea id="text" class="divs" style="font-size:12px">asdad</textarea>
+</div>
+<button  onclick="jsCallAndroid()" class="divs" >点击按钮</button>
+</body>
+</html>
