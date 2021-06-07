@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/color_title_bar">
+        <com.wdweblib.widget.TitleBar
+            android:id="@+id/bar_title"
             android:layout_width="match_parent"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="#EF9A9A"
+            android:layout_height="@dimen/title_bar_height" />
+        <com.google.android.material.tabs.TabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tab"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/title_bar_height"
+            android:layout_centerInParent="true"
+            android:background="@color/color_title_bar"
+            app:tabIndicatorColor="#FF70C909"
+            app:tabSelectedTextColor="#70C909"
             app:tabTextAppearance="@style/tab_appearance"
-            android:layout_height="?attr/actionBarSize"/>
+            app:tabTextColor="#FF333333" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+
+    </RelativeLayout>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"/>
-</FrameLayout>
+        android:layout_weight="1" />
+</LinearLayout>

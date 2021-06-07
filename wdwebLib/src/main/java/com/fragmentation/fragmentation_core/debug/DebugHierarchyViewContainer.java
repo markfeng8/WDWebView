@@ -112,7 +112,9 @@ public class DebugHierarchyViewContainer extends ScrollView {
         return mTitleLayout;
     }
 
-    private void setView(final List<DebugFragmentRecord> fragmentRecordList, final int hierarchy, final TextView tvItem) {
+    private void setView(final List<DebugFragmentRecord> fragmentRecordList,
+                         final int hierarchy,
+                         final TextView tvItem) {
         for (int i = fragmentRecordList.size() - 1; i >= 0; i--) {
             DebugFragmentRecord child = fragmentRecordList.get(i);
             int tempHierarchy = hierarchy;

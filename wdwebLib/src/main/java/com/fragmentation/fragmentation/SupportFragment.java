@@ -8,12 +8,15 @@ import android.view.animation.Animation;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentationMagician;
 
 import com.fragmentation.fragmentation_core.ExtraTransaction;
 import com.fragmentation.fragmentation_core.ISupportFragment;
 import com.fragmentation.fragmentation_core.SupportFragmentDelegate;
 import com.fragmentation.fragmentation_core.SupportHelper;
 import com.fragmentation.fragmentation_core.anim.FragmentAnimator;
+
+import java.util.List;
 
 
 /**
@@ -420,6 +423,24 @@ public class SupportFragment extends Fragment implements ISupportFragment {
 
     public ISupportFragment getTopChildFragment() {
         return SupportHelper.getTopFragment(getChildFragmentManager());
+    }
+
+    /**
+     * 获取当前可见的frament
+     *
+     * @return
+     */
+    public Fragment getCurVisibleFragment() {
+        List<Fragment> fragmentList = FragmentationMagician.getActiveFragments(getFragmentManager());
+        Fragment visibleFrag = new Fragment();
+        if (fragmentList == null || fragmentList.size() < 1) return null;
+
+        for (Fragment fragment : fragmentList) {
+            if (fragment instanceof ISupportFragment && ((ISupportFragment) fragment).isSupportVisible()) {
+                visibleFrag = fragment;
+            }
+        }
+        return visibleFrag;
     }
 
     /**

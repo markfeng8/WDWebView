@@ -1,6 +1,7 @@
 package com.wdweblib.ui;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wdweblib.BaseActivity;
@@ -24,6 +25,10 @@ import java.util.List;
  */
 public abstract class WDMainActivity extends BaseActivity {
 
+    // 再点一次退出程序时间设置
+    private static final long WAIT_TIME = 2000L;
+    private long TOUCH_TIME = 0;
+
     private List<TabListBean> mTabList;
     private String mSelectColor;
     private String mUnselectColor;
@@ -40,10 +45,11 @@ public abstract class WDMainActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         mTabList = tabConfig();
         if (mTabList == null) {
-            throw new NullPointerException("请集成WDMactivity，并且重新tabConfig方法，实现底部导航栏的配置！");
+            throw new NullPointerException("请继承WDMainActivity，并且重写tabConfig方法，实现底部导航栏的配置！");
         }
         loadRootFragment(R.id.fl_container,
                 WDMainFragment.newInstance(mTabList, selectedTextColor(), unselectedTextColor()));
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -70,6 +76,20 @@ public abstract class WDMainActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            pop();
+        } else {
+            if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+                finish();
+            } else {
+                TOUCH_TIME = System.currentTimeMillis();
+                Toast.makeText(this, R.string.press_again_exit, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     protected abstract ArrayList<TabListBean> tabConfig();

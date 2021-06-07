@@ -3,7 +3,7 @@ package com.wdweblib.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +11,7 @@ import java.util.List;
  * <p>
  * create on 2021-06-01 11:22
  */
-public  class TabListBean implements Parcelable {
+public class TabListBean implements Parcelable {
 
 
     /**
@@ -24,8 +24,8 @@ public  class TabListBean implements Parcelable {
      */
 
     private String tabName;
-    private String selectedUrl;
-    private String unselectedUrl;
+    private Object selectedUrl;
+    private Object unselectedUrl;
     private boolean hasNavigation;
     private boolean isDialog;
     private List<TabPageBean> tabPage;
@@ -34,11 +34,8 @@ public  class TabListBean implements Parcelable {
 
     }
 
-
     protected TabListBean(Parcel in) {
         tabName = in.readString();
-        selectedUrl = in.readString();
-        unselectedUrl = in.readString();
         hasNavigation = in.readByte() != 0;
         isDialog = in.readByte() != 0;
         tabPage = in.createTypedArrayList(TabPageBean.CREATOR);
@@ -47,8 +44,6 @@ public  class TabListBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(tabName);
-        dest.writeString(selectedUrl);
-        dest.writeString(unselectedUrl);
         dest.writeByte((byte) (hasNavigation ? 1 : 0));
         dest.writeByte((byte) (isDialog ? 1 : 0));
         dest.writeTypedList(tabPage);
@@ -79,24 +74,24 @@ public  class TabListBean implements Parcelable {
         this.tabName = tabName;
     }
 
-    public String getSelectedUrl() {
+    public boolean isHasNavigation() {
+        return hasNavigation;
+    }
+
+    public Object getSelectedUrl() {
         return selectedUrl;
     }
 
-    public void setSelectedUrl(String selectedUrl) {
+    public void setSelectedUrl(Object selectedUrl) {
         this.selectedUrl = selectedUrl;
     }
 
-    public String getUnselectedUrl() {
+    public Object getUnselectedUrl() {
         return unselectedUrl;
     }
 
-    public void setUnselectedUrl(String unselectedUrl) {
+    public void setUnselectedUrl(Object unselectedUrl) {
         this.unselectedUrl = unselectedUrl;
-    }
-
-    public boolean isHasNavigation() {
-        return hasNavigation;
     }
 
     public void setHasNavigation(boolean hasNavigation) {
@@ -119,9 +114,22 @@ public  class TabListBean implements Parcelable {
         this.tabPage = tabPage;
     }
 
+    /**
+     * 获取MulItemList
+     * @return
+     */
+    public List<MulItemFragmentBean> getMulItemList() {
+        List<MulItemFragmentBean> mulItemList = new ArrayList<>();
+        MulItemFragmentBean item;
+        for (TabPageBean tabPageBean : tabPage) {
+            item = new MulItemFragmentBean(tabPageBean.getTitle(), tabPageBean.getUrl());
+            mulItemList.add(item);
+        }
+        return mulItemList;
+    }
 
 
-    public static class TabPageBean implements Parcelable{
+    public static class TabPageBean implements Parcelable {
         /**
          * title : wode
          * url : http

@@ -8,6 +8,7 @@ package com.wdweblib.bean;
 public class NativeBean<T> {
 
     private String type;
+    private String callBackMethod;
     private T params;
 
     public String getType() {
@@ -16,6 +17,14 @@ public class NativeBean<T> {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCallBackMethod() {
+        return callBackMethod;
+    }
+
+    public void setCallBackMethod(String callBackMethod) {
+        this.callBackMethod = callBackMethod;
     }
 
     public T getParams() {

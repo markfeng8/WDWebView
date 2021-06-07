@@ -1,4 +1,5 @@
 <resources>
     <string name="fragmentation_stack_view">Stack</string>
     <string name="fragmentation_stack_help">*: Not in backStack\n☀: Visible</string>
+    <string name="press_again_exit">再按一次退出</string>
 </resources>

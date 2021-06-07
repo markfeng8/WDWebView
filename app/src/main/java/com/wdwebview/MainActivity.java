@@ -1,5 +1,10 @@
 package com.wdwebview;
 
+import android.content.Intent;
+import android.print.PrintManager;
+
+import androidx.annotation.Nullable;
+
 import com.wdweblib.bean.TabListBean;
 import com.wdweblib.ui.WDMainActivity;
 
@@ -11,27 +16,28 @@ public class MainActivity extends WDMainActivity {
 
     @Override
     protected ArrayList<TabListBean> tabConfig() {
-        ArrayList<TabListBean> list=new ArrayList<>();
-        TabListBean tabOne=new TabListBean();
+
+        ArrayList<TabListBean> list = new ArrayList<>();
+        TabListBean tabOne = new TabListBean();
         tabOne.setHasNavigation(true);
         tabOne.setDialog(false);
-        tabOne.setSelectedUrl("www.123.jpg");
+        tabOne.setSelectedUrl(R.mipmap.ic_search_black);
         tabOne.setUnselectedUrl("www.456.jpg");
-        tabOne.setTabName("shouye");
-        List<TabListBean.TabPageBean> tabPageOne=new ArrayList<>();
-        tabPageOne.add(new TabListBean.TabPageBean("one","http://10.2.98.138:8889/"));
+        tabOne.setTabName("首页");
+        List<TabListBean.TabPageBean> tabPageOne = new ArrayList<>();
+        tabPageOne.add(new TabListBean.TabPageBean("one", "http://10.2.98.138:8888/"));
         tabOne.setTabPage(tabPageOne);
         list.add(tabOne);
 
-        TabListBean tabTwo=new TabListBean();
+        TabListBean tabTwo = new TabListBean();
         tabTwo.setHasNavigation(true);
         tabTwo.setDialog(false);
         tabTwo.setSelectedUrl("www.123.jpg");
         tabTwo.setUnselectedUrl("www.456.jpg");
-        tabTwo.setTabName("geren");
-        List<TabListBean.TabPageBean> tabPageTwo=new ArrayList<>();
-        tabPageTwo.add(new TabListBean.TabPageBean("two","https://www.baidu.com/"));
-        tabPageTwo.add(new TabListBean.TabPageBean("title","https://www.baidu.com/"));
+        tabTwo.setTabName("个人");
+        List<TabListBean.TabPageBean> tabPageTwo = new ArrayList<>();
+        tabPageTwo.add(new TabListBean.TabPageBean("one", "http://10.2.98.138:8888/"));
+        tabPageTwo.add(new TabListBean.TabPageBean("two", "https://www.baidu.com/"));
         tabTwo.setTabPage(tabPageTwo);
         list.add(tabTwo);
 
@@ -48,5 +54,8 @@ public class MainActivity extends WDMainActivity {
         return "#636363";
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

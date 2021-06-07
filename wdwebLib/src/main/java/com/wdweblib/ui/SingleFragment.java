@@ -1,12 +1,12 @@
 package com.wdweblib.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
 import com.wdweblib.BaseFragment;
 import com.wdweblib.Constants;
@@ -44,6 +44,7 @@ public class SingleFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wd_fragment_single, container, false);
         initView(view, savedInstanceState);
+        Log.d("fct", getTag() + "");
         return view;
     }
 

@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.fragmentation.fragmentation.SupportFragment;
+import com.wdweblib.BaseFragment;
 import com.wdweblib.R;
+import com.wdweblib.bean.MulItemFragmentBean;
 import com.wdweblib.bean.TabListBean;
 import com.wdweblib.widget.bottombar.BottomBar;
 import com.wdweblib.widget.bottombar.BottomBarTab;
@@ -71,8 +74,9 @@ public class WDMainFragment extends SupportFragment {
             for (int i = 0; i < list.size(); i++) {
                 tabBean = list.get(i);
                 if (tabBean.getTabPage().size() > 1) {
+                    List<MulItemFragmentBean> mulItemList = tabBean.getMulItemList();
                     mFragments[i] = MulFragment.newInstance(
-                            tabBean.getTabPage().get(0).getUrl());
+                            mulItemList);
 
                 } else {
                     mFragments[i] = SingleFragment.newInstance(
@@ -118,5 +122,25 @@ public class WDMainFragment extends SupportFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        //forward跳转的时候，设置了startForResult。会返回到这里，但是逻辑
+        //统一在BaseFramengt里处理
 
+        List<Fragment> list = getChildFragmentManager().getFragments();
+        for (Fragment baseFragment : list) {
+            if (baseFragment != null
+                    && baseFragment instanceof SingleFragment) {
+                if (baseFragment.isVisible()
+                        && baseFragment instanceof BaseFragment) {
+                    ((BaseFragment) baseFragment).onFragmentResult(requestCode, resultCode, data);
+                }
+            } else if (baseFragment != null
+                    && baseFragment instanceof MulFragment) {
+                ((MulFragment) baseFragment).onFragmentResult(requestCode, resultCode, data);
+            }
+        }
+
+    }
 }

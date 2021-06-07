@@ -2,6 +2,7 @@ package com.wdweblib.widget;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -193,8 +194,16 @@ public class TitleBar extends RelativeLayout {
             public void onClick(View v) {
                 if (StringUtils.isNotEmpty(bean.getBackUrl())) {
                     // TODO: 2021/5/31 返回指定url界面
+                    mBaseFragment.extraTransaction()
+                            .popTo(bean.getBackUrl(),
+                                    false);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("type", "123");
+                    mBaseFragment.setFragmentResult(mBaseFragment.RESULT_OK, bundle);
+                    mBaseFragment.pop();
                 }
-                mBaseFragment.pop();
+
             }
         });
         return backView;
@@ -513,7 +522,7 @@ public class TitleBar extends RelativeLayout {
         View view = inflate(mContext, R.layout.wd_view_titleview_search, null);
         EditText et_search = view.findViewById(R.id.et_search);
         ImageView iv_voice = view.findViewById(R.id.iv_voice);
-
+        et_search.setHint(bean.getPlaceHolder());
         if (bean.isVoice()) {
             iv_voice.setVisibility(VISIBLE);
         } else {

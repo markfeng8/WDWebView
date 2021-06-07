@@ -14,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
 import com.bumptech.glide.Glide;
 import com.wdweblib.R;
-import com.wdweblib.bean.BottomBarBean;
 import com.wdweblib.bean.TabListBean;
 
 
@@ -87,10 +84,8 @@ public class BottomBarTab extends FrameLayout {
         mIcon = new ImageView(context);
         int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
-        Glide.with(context).load(bean.getUnselectedUrl())
-                .placeholder(R.mipmap.img_load_placeholder)
-                .error(R.mipmap.img_load_error)
-                .into(mIcon);
+
+        loadImage(mIcon,bean.getUnselectedUrl());
 
         mIcon.setLayoutParams(params);
 //        mIcon.setColorFilter(ContextCompat.getColor(context, Color.parseColor(unselectedTextColor)));
@@ -114,17 +109,10 @@ public class BottomBarTab extends FrameLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         if (selected) {
-            Glide.with(mContext).load(mTabBean.getSelectedUrl())
-                    .placeholder(R.mipmap.img_load_placeholder)
-                    .error(R.mipmap.img_load_error)
-                    .into(mIcon);
+            loadImage(mIcon,mTabBean.getSelectedUrl());
             mTvTitle.setTextColor(Color.parseColor(mSelectedTextColor));
         } else {
-            Glide.with(mContext).load(mTabBean.getUnselectedUrl())
-                    .placeholder(R.mipmap.img_load_placeholder)
-                    .error(R.mipmap.img_load_error)
-                    .into(mIcon);
-
+            loadImage(mIcon,mTabBean.getUnselectedUrl());
             mTvTitle.setTextColor(Color.parseColor(mUnSelectedTextColor));
         }
     }
@@ -140,6 +128,21 @@ public class BottomBarTab extends FrameLayout {
         return mTabPosition;
     }
 
+
+    private void loadImage(ImageView mIcon, Object image) {
+        if (image instanceof String) {
+            Glide.with(mContext).load((String) image)
+                    .placeholder(R.mipmap.img_load_placeholder)
+                    .error(R.mipmap.img_load_error)
+                    .into(mIcon);
+        } else if (image instanceof Integer) {
+            Glide.with(mContext).load((int) image)
+                    .placeholder(R.mipmap.img_load_placeholder)
+                    .error(R.mipmap.img_load_error)
+                    .into(mIcon);
+        }
+
+    }
 
     private int dip2px(Context context, float dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());

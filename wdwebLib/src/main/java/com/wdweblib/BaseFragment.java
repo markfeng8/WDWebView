@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 
 import com.fragmentation.fragmentation.SupportFragment;
 import com.wdweblib.bean.JSMessage;
+import com.wdweblib.interactive.JSForward;
+import com.wdweblib.interactive.JSNativePermission;
 import com.wdweblib.interactive.JSSetHeader;
 import com.wdweblib.web.WDWebView;
 import com.wdweblib.widget.TitleBar;
@@ -66,8 +68,8 @@ public class BaseFragment extends SupportFragment implements LoadView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void jsMsgEvent(JSMessage msg) {
-        //当前fragment是栈顶fragment的时候才响应
-        if (getTopFragment() == this) {
+        //当前fragment是可见的fragment的时候才响应
+        if (getCurVisibleFragment() == this) {
             if (Constants.TYPE_SETHEADER.equals(msg.getType())) {
                 JSSetHeader.getInstance().setHeader(
                         this,
@@ -75,18 +77,16 @@ public class BaseFragment extends SupportFragment implements LoadView {
                         mTitleBar,
                         msg.getMessage());
             } else if (Constants.TYPE_FORWARD.equals(msg.getType())) {
-
+                JSForward.getInstance().doForward(_mActivity,
+                        this,
+                        mWDWebView,
+                        msg.getMessage());
             } else if (Constants.TYPE_NATIVEPERMISSION.equals(msg.getType())) {
-
+                JSNativePermission.getInstance().doNative(_mActivity,
+                        this,
+                        mWDWebView,
+                        msg.getMessage());
             }
-//            if (getParentFragment() instanceof SingleFragment
-//                    || getTopFragment() instanceof SingleFragment) {
-////                start(SingleFragment.newInstance("https://www.baidu.com/"));
-//
-//            } else if (getParentFragment() instanceof MulFragment) {
-//                ((MulFragment) getParentFragment())
-//                        .start(MulItemFragment.newInstance("https://www.baidu.com/"));
-//            }
         }
     }
 
@@ -99,18 +99,46 @@ public class BaseFragment extends SupportFragment implements LoadView {
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        mWDWebView.callJs("onVisible", "");
+        if (mWDWebView != null) {
+            mWDWebView.callJs("onVisible", "");
+        }
+
     }
 
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
-        mWDWebView.callJs("onInvisible", "");
+        if (mWDWebView != null) {
+            mWDWebView.callJs("onInvisible", "");
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mWDWebView.callJs("onDestory", "");
+        if (mWDWebView != null) {
+            mWDWebView.callJs("onDestory", "");
+        }
+    }
+
+    @Nullable
+    public WDWebView getmWDWebView() {
+        return mWDWebView;
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == JSForward.REQUESTCODE_FORWARD) {
+            switch (resultCode) {
+                case JSForward.RESULTCODE_REFRESHURL_REFRESH:
+                    mWDWebView.reload();
+                    break;
+                case JSForward.RESULTCODE_REFRESHURL_RELOAD:
+                    String url = data.getString("refreshUrl");
+                    mWDWebView.loadUrl(url);
+                    break;
+            }
+        }
     }
 }

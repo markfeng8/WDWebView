@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.wdweblib.BaseFragment;
 import com.wdweblib.Constants;
 import com.wdweblib.R;
+import com.wdweblib.interactive.JSForward;
 
 /**
  * code by markfeng
@@ -51,4 +52,5 @@ public class MulItemFragment extends BaseFragment {
         mWDWebView.loadUrl_(mUrl, MulItemFragment.this);
 
     }
+
 }

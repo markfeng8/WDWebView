@@ -7,8 +7,11 @@ import com.fragmentation.fragmentation_core.Fragmentation;
 import com.fragmentation.fragmentation_core.helper.ExceptionHandler;
 import com.tencent.smtt.export.external.TbsCoreSettings;
 import com.tencent.smtt.sdk.QbSdk;
+import com.wdweblib.utils.ToastUtils;
 
 import java.util.HashMap;
+
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * code by markfeng
@@ -28,7 +31,9 @@ public class WDWebSdk {
 
     public void init(Context context) {
         initX5(context);
+        initJpush(context);
         initFragmentation();
+        ToastUtils.init(context);
     }
 
     private void initX5(Context context) {
@@ -73,5 +78,10 @@ public class WDWebSdk {
                     }
                 })
                 .install();
+    }
+
+    private void initJpush(Context context){
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(context);
     }
 }

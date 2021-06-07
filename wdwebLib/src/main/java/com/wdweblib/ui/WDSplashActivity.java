@@ -29,7 +29,7 @@ public class WDSplashActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 Intent intent = new Intent(WDSplashActivity.this,
-                        WDMainActivity.class);
+                        WDLoginActivity.class);
                 startActivity(intent);
                 finish();
             }

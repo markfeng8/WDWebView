@@ -14,4 +14,15 @@ public class Constants {
     public static final String TYPE_FORWARD="forward";
 
     public static final String TYPE_TABCONFIG="tabConfig";
+
+    /* 登录信息 */
+    public static final String KEY_LASTLOGINTIME = "loginTime";
+    /* 登录token */
+    public static final String KEY_REFRESHTOKEN = "REFRESH_TOKEN";
+    /* 登录用户名 */
+    public static final String KEY_USERNAME = "username";
+    /* 登录密码 */
+    public static final String KEY_PASSWORD = "password";
+
+    public static final String KEY_COOKIE = "cookie";
 }

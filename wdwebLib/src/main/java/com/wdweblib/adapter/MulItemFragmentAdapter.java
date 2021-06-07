@@ -4,36 +4,35 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.wdweblib.bean.MulItemFragmentBean;
 import com.wdweblib.ui.MulItemFragment;
+
+import java.util.List;
 
 /**
  * Created by YoKeyword on 16/6/5.
  */
 public class MulItemFragmentAdapter extends FragmentPagerAdapter {
 
-    private String[] mTitles;
+    private List<MulItemFragmentBean> mList;
 
-    public MulItemFragmentAdapter(FragmentManager fm, String... titles) {
+    public MulItemFragmentAdapter(FragmentManager fm, List<MulItemFragmentBean> list) {
         super(fm);
-        mTitles = titles;
+        mList = list;
     }
 
     @Override
     public Fragment getItem(int position) {
-        if(position==0){
-            return MulItemFragment.newInstance("http://10.2.98.113:8889/");
-        }else {
-            return MulItemFragment.newInstance("https://www.csdn.net/");
-        }
+        return MulItemFragment.newInstance(mList.get(position).getUrl());
     }
 
     @Override
     public int getCount() {
-        return mTitles.length;
+        return mList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles[position];
+        return mList.get(position).getTitle();
     }
 }

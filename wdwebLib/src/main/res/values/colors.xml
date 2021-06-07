@@ -11,4 +11,18 @@
     <color name="color_gray_333">#FF333333</color>
     <color name="color_gray_666">#FF666666</color>
     <color name="color_gray_999">#FF999999</color>
+
+    <color name="viewfinder_mask_color">#60000000</color>
+    <color name="result_view_color">#B0000000</color>
+    <color name="viewfinder_frame_color">#90FFFFFF</color>
+    <color name="result_points_color">#C0FFFF00</color>
+    <color name="zxing_laser_color">#0dbbff</color>
+    <color name="corners_color">#5d9eff</color>
+    <color name="zxing_color_accent">#FF4081</color>
+    <color name="android_rgb_color_bdbdbd">#BDBDBD</color>
+    <color name="colorTransparent">#00000000</color>
+    <color name="colorGray">#b5b5b5</color>
+    <color name="colorDialogBackground">#88000000</color>
+    <color name="color_fefefe">#fefefe</color>
+    <color name="color_bdbdbd">#bdbdbd</color>
 </resources>

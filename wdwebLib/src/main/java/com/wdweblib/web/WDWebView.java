@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -151,6 +152,7 @@ public class WDWebView extends WebView implements LoadView {
      * @param params
      */
     public void callJs(String callBackMethod, String params) {
+        Log.i("callJs:", "javascript:executeJS('" + callBackMethod + "','" + params + "')");
         evaluateJavascript("javascript:executeJS('" + callBackMethod + "','" + params + "')", new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
