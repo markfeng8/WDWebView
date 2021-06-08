@@ -28,6 +28,7 @@ import com.wdweblib.bean.nativeparam.ShareParam;
 import com.wdweblib.bean.nativeparam.VideoParam;
 import com.wdweblib.ui.PhotoLibraryActivity;
 import com.wdweblib.ui.mediarecorder.MediaRecorderActivity;
+import com.wdweblib.utils.BDAsrManger;
 import com.wdweblib.utils.CacheUtil;
 import com.wdweblib.utils.CameraHelper;
 import com.wdweblib.utils.DownloadTask;
@@ -124,7 +125,24 @@ public class JSNativePermission {
             cacheSize(nativeJson);
         } else if ("download".equals(type)) {
             download(nativeJson);
+        } else if ("voice".equals(type)) {
+            voice(nativeJson);
         }
+    }
+
+    private void voice(String nativeJson) {
+        RxPermission.getInstance().requestPermissions(_mActivity,
+                "您已禁止了麦克风权限，是否前往设置界面打卡？", new RxPermission.PermissionsImp() {
+                    @Override
+                    public void accept(Permission permission) {
+                        BDAsrManger.getInstance()
+                                .init(_mActivity)
+                                .start();
+                    }
+                },
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private void download(String nativeJson) {

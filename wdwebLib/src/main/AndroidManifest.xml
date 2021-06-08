@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
     <!--用于进行网络定位-->
@@ -28,9 +29,13 @@
     <!--用于申请调用A-GPS模块-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
     <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!--    百度语音识别-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
 
     <application>
         <activity android:name=".ui.WDMainActivity" />
@@ -43,9 +48,10 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="请输入您的用户Key"/>
+            android:value="请输入您的用户Key" />
 
-        <service android:name=".service.MyJCommonService"
+        <service
+            android:name=".service.MyJCommonService"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">
@@ -61,11 +67,22 @@
         <receiver
             android:name=".receiver.MyJPushMessageReceiver"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
                 <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.baidu.speech.APP_ID"
+            android:value="24330923"/>
+
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="Ltt7N99l8xKt1HMAfD9zgnCF"/>
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="hUfw1RUvbMdvdRGhxvLWVjl7QXwyAppg"/>
     </application>
 </manifest>

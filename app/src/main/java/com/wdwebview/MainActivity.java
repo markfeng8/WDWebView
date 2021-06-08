@@ -22,7 +22,7 @@ public class MainActivity extends WDMainActivity {
         tabOne.setHasNavigation(true);
         tabOne.setDialog(false);
         tabOne.setSelectedUrl(R.mipmap.ic_search_black);
-        tabOne.setUnselectedUrl("www.456.jpg");
+        tabOne.setUnselectedUrl(R.mipmap.icon_back);
         tabOne.setTabName("首页");
         List<TabListBean.TabPageBean> tabPageOne = new ArrayList<>();
         tabPageOne.add(new TabListBean.TabPageBean("one", "http://10.2.98.138:8888/"));

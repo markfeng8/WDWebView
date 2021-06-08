@@ -85,7 +85,7 @@ public class BottomBarTab extends FrameLayout {
         int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
 
-        loadImage(mIcon,bean.getUnselectedUrl());
+        loadImage(mIcon, bean.getUnselectedUrl());
 
         mIcon.setLayoutParams(params);
 //        mIcon.setColorFilter(ContextCompat.getColor(context, Color.parseColor(unselectedTextColor)));
@@ -109,10 +109,10 @@ public class BottomBarTab extends FrameLayout {
     public void setSelected(boolean selected) {
         super.setSelected(selected);
         if (selected) {
-            loadImage(mIcon,mTabBean.getSelectedUrl());
+            loadImage(mIcon, mTabBean.getSelectedUrl());
             mTvTitle.setTextColor(Color.parseColor(mSelectedTextColor));
         } else {
-            loadImage(mIcon,mTabBean.getUnselectedUrl());
+            loadImage(mIcon, mTabBean.getUnselectedUrl());
             mTvTitle.setTextColor(Color.parseColor(mUnSelectedTextColor));
         }
     }
