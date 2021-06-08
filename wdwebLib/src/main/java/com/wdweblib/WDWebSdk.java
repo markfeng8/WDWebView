@@ -31,7 +31,7 @@ public class WDWebSdk {
 
     public void init(Context context) {
         initX5(context);
-        initJpush(context);
+//        initJpush(context);
         initFragmentation();
         ToastUtils.init(context);
     }
