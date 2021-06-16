@@ -1,6 +1,7 @@
 package com.wdweblib.web;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -65,6 +66,15 @@ public class WDWebViewClient extends WebViewClient {
     public void onPageFinished(WebView webView, String s) {
         super.onPageFinished(webView, s);
         Log.i("WDWeb","onPageFinished");
+        String authToken="123456";
+        String js = "window.localStorage.setItem('wondersAuthToken','" + authToken + "');";
+        String jsUrl = "javascript:(function({ var localStorage = window.localStorage; localStorage.setItem('wondersAuthToken','" + authToken + "') })()";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.evaluateJavascript(js, null);
+        } else {
+            webView.loadUrl(jsUrl);
+            webView.reload();
+        }
     }
 
     @Override

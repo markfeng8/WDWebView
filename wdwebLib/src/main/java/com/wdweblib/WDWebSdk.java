@@ -80,8 +80,12 @@ public class WDWebSdk {
                 .install();
     }
 
-    private void initJpush(Context context){
+    private void initJpush(Context context) {
         JPushInterface.setDebugMode(true);
         JPushInterface.init(context);
+    }
+
+    public void setHost(String host) {
+        Constants.HOST = host;
     }
 }

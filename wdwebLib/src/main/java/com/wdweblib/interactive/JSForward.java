@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.fragmentation.fragmentation.SupportActivity;
 import com.google.gson.Gson;
 import com.wdweblib.BaseFragment;
+import com.wdweblib.Constants;
 import com.wdweblib.bean.ForwardBean;
 import com.wdweblib.ui.SingleFragment;
 import com.wdweblib.ui.WDLoginActivity;
@@ -73,7 +74,7 @@ public class JSForward {
             _mActivity.extraTransaction()
                     .setTag(bean.getToPage())
                     .startForResult(
-                            SingleFragment.newInstance("http://10.2.98.138:8889/"),
+                            SingleFragment.newInstance(Constants.HOST + bean.getToPage()),
                             REQUESTCODE_FORWARD);
         } else if ("pop".equals(bean.getAnimate())) {
             //animate为pop时候toPage若为空字符串则直接返回；

@@ -7,13 +7,15 @@ package com.wdweblib;
  */
 public class Constants {
 
-    public static final String FLAG_JUMP_URL="flag_jump_url";
+    public static String HOST;
 
-    public static final String TYPE_NATIVEPERMISSION="nativePermission";
-    public static final String TYPE_SETHEADER="setHeader";
-    public static final String TYPE_FORWARD="forward";
+    public static final String FLAG_JUMP_URL = "flag_jump_url";
 
-    public static final String TYPE_TABCONFIG="tabConfig";
+    public static final String TYPE_NATIVEPERMISSION = "nativePermission";
+    public static final String TYPE_SETHEADER = "setHeader";
+    public static final String TYPE_FORWARD = "forward";
+
+    public static final String TYPE_TABCONFIG = "tabConfig";
 
     /* 登录信息 */
     public static final String KEY_LASTLOGINTIME = "loginTime";

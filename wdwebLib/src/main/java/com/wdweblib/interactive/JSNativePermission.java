@@ -36,6 +36,7 @@ import com.wdweblib.utils.GDGpsManger;
 import com.wdweblib.utils.ImageOperation;
 import com.wdweblib.utils.PhotoUtils;
 import com.wdweblib.utils.RxPermission;
+import com.wdweblib.utils.SPUtils;
 import com.wdweblib.utils.StringUtils;
 import com.wdweblib.utils.ToastUtils;
 import com.wdweblib.utils.ToolUtils;
@@ -254,6 +255,7 @@ public class JSNativePermission {
     }
 
     private void nativeStorage(String nativeJson) {
+        SPUtils.put(_mActivity,"wondersAuthToken","123456");
         NativeStorageParam bean = mGson.fromJson(nativeJson, NativeStorageParam.class);
         RxPermission.getInstance().requestPermissions(_mActivity,
                 "您已禁止了SD存储权限，是否前往设置打开？",
@@ -262,7 +264,7 @@ public class JSNativePermission {
                     public void accept(Permission permission) {
                         if (permission.granted) {
                             mWDWebView.callJs(bean.getCallBackMethod(),
-                                    bean.backJsonStr(_mActivity));
+                                    bean.getParams().backJsonStr(_mActivity));
                         }
                     }
                 }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
