@@ -23,7 +23,7 @@ import java.util.List;
  * <p>
  * create on 2021-05-26 17:11
  */
-public abstract class WDMainActivity extends BaseActivity {
+public abstract class WDMainActivity extends BaseActivity implements WDMainFragment.TabChangeImp {
 
     // 再点一次退出程序时间设置
     private static final long WAIT_TIME = 2000L;

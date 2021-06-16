@@ -1,5 +1,6 @@
 package com.wdweblib.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fragmentation.fragmentation.SupportFragment;
@@ -18,7 +20,6 @@ import com.wdweblib.R;
 import com.wdweblib.adapter.MulItemFragmentAdapter;
 import com.wdweblib.bean.JSMessage;
 import com.wdweblib.bean.MulItemFragmentBean;
-import com.wdweblib.interactive.JSForward;
 import com.wdweblib.interactive.JSSetHeader;
 import com.wdweblib.web.WDWebView;
 import com.wdweblib.widget.TitleBar;
@@ -78,24 +79,27 @@ public class MulFragment extends SupportFragment {
         adapter = new MulItemFragmentAdapter(getChildFragmentManager(), mList);
         mViewPager.setAdapter(adapter);
         mTab.setupWithViewPager(mViewPager);
+    }
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+    /**
+     * mulitemfragment调用此方法，设置setHeader中
+     * 需要传递的webview对象
+     *
+     * @param wdWebView
+     */
+    public void setWDWebView(WDWebView wdWebView) {
+        this.mWDWebView = wdWebView;
+    }
 
-            @Override
-            public void onPageSelected(int position) {
-                mBaseFragment = (BaseFragment) adapter.getItem(position);
-                mWDWebView = mBaseFragment.getmWDWebView();
-            }
+    @Override
+    public void onAttachFragment(@NonNull Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+    }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

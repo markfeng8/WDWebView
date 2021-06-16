@@ -1,5 +1,6 @@
 package com.wdweblib.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import com.wdweblib.BaseFragment;
 import com.wdweblib.R;
 import com.wdweblib.bean.MulItemFragmentBean;
 import com.wdweblib.bean.TabListBean;
+import com.wdweblib.utils.StringUtils;
 import com.wdweblib.widget.bottombar.BottomBar;
 import com.wdweblib.widget.bottombar.BottomBarTab;
 
@@ -34,6 +36,11 @@ public class WDMainFragment extends SupportFragment {
     private String mSelectColor;
     private String mUnselectColor;
 
+    private TabChangeImp tabChangeImp;
+
+    public interface TabChangeImp {
+        void tabChange(int position, int prePosition);
+    }
 
     public static WDMainFragment newInstance(List<TabListBean> tabList,
                                              String selectColor,
@@ -66,6 +73,11 @@ public class WDMainFragment extends SupportFragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        tabChangeImp = (TabChangeImp) activity;
+    }
 
     private void tabConfig(List<TabListBean> list) {
         if (list == null) return;
@@ -77,10 +89,26 @@ public class WDMainFragment extends SupportFragment {
                     List<MulItemFragmentBean> mulItemList = tabBean.getMulItemList();
                     mFragments[i] = MulFragment.newInstance(
                             mulItemList);
-
                 } else {
-                    mFragments[i] = SingleFragment.newInstance(
-                            tabBean.getTabPage().get(0).getUrl());
+                    //支持两种类型：一种是使用SingleFragment加载url，
+                    //一种是加载自己定义的fragment作为一级页面
+                    String url = tabBean.getTabPage().get(0).getUrl();
+                    if (StringUtils.isNotEmpty(url)
+                            && url.startsWith("http")) {
+                        mFragments[i] = SingleFragment.newInstance(url);
+                    } else {
+                        try {
+                            Class clz = Class.forName(url);
+                            SupportFragment frag = (SupportFragment) clz.newInstance();
+                            mFragments[i] = frag;
+                        } catch (ClassNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (java.lang.InstantiationException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
                 mBottomBar.addItem(new BottomBarTab(
@@ -103,6 +131,9 @@ public class WDMainFragment extends SupportFragment {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
+                if (tabChangeImp != null) {
+                    tabChangeImp.tabChange(position, prePosition);
+                }
             }
 
             @Override
